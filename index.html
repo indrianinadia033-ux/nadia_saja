@@ -3,81 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kimia Blitz! | Kuis Unsur & Molekul</title>
+    <title>Kimia Kucing! | Kuis Molekul Gemas</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
 
     <style>
-        /* Warna Dasar */
+        /* Warna Dasar Gemas */
         :root {
-            --bg-color: #0d1a26; /* Biru gelap */
-            --primary-glow: #00ffc8; /* Hijau neon */
-            --secondary-glow: #ff007b; /* Pink neon */
+            --bg-color: #f7f3e8; /* Krem Muda */
+            --main-color: #ff9aa2; /* Pink Muda (Coral) */
+            --accent-color: #b5e7a0; /* Hijau Mint */
+            --text-color: #3e3e3e; /* Abu gelap */
         }
 
-        /* Mengatur Latar Belakang */
+        /* Mengatur Latar Belakang dan Font */
         body {
             background-color: var(--bg-color);
-            color: #f0f8ff; /* Warna teks putih kebiruan */
-            font-family: 'Orbitron', sans-serif; /* Font khas Sci-Fi */
+            color: var(--text-color);
+            font-family: 'Nunito', sans-serif; /* Font utama yang bulat */
             padding-bottom: 50px;
         }
 
-        /* Efek Glow untuk Kartu Utama */
-        .custom-card-glow {
-            background-color: #1a2c3e; /* Warna kartu sedikit lebih terang */
-            border: 2px solid var(--primary-glow);
-            box-shadow: 0 0 20px rgba(0, 255, 200, 0.5), 0 0 10px rgba(255, 0, 123, 0.3);
+        /* Navbar */
+        .navbar {
+            background-color: var(--main-color) !important;
+            border-bottom: 5px solid #ffbebc; /* Garis bawah yang lembut */
+        }
+        .navbar-brand {
+            font-family: 'Gochi Hand', cursive; /* Font tulisan tangan untuk judul */
+            font-size: 1.8rem;
+            color: white !important;
+            text-shadow: 2px 2px 0 #e47171; /* Efek shadow lucu */
+        }
+
+        /* Efek Gemas untuk Kartu Utama */
+        .custom-card-cute {
+            background-color: white;
+            border: 4px solid var(--main-color);
+            border-radius: 20px; /* Sudut sangat bulat */
+            box-shadow: 8px 8px 0px var(--accent-color); /* Shadow tebal */
             transition: transform 0.3s ease;
         }
 
-        .custom-card-glow:hover {
-            transform: scale(1.02);
+        .custom-card-cute:hover {
+            transform: translateY(-5px); /* Sedikit terangkat saat disentuh */
         }
 
         /* Header Kuis */
         .custom-header {
-            background-color: #07121b;
-            color: var(--primary-glow);
-            border-bottom: 2px solid var(--secondary-glow);
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            font-weight: 900;
         }
 
-        /* Tombol Jawaban */
+        /* Tombol Jawaban (Pilihan) */
         .option-btn {
-            border-color: var(--primary-glow);
-            color: var(--primary-glow);
+            background-color: #fff;
+            border: 2px solid var(--main-color);
+            color: var(--main-color);
+            font-weight: 700;
+            border-radius: 10px;
             transition: all 0.2s ease;
         }
 
         .option-btn:hover:not(:disabled) {
-            background-color: rgba(0, 255, 200, 0.2);
-            color: #fff;
-            box-shadow: 0 0 10px var(--primary-glow);
+            background-color: var(--main-color);
+            color: white;
+            border-color: var(--main-color);
         }
 
         /* Status Jawaban: Benar */
         .btn-correct {
-            background-color: #00ffc8 !important;
-            color: var(--bg-color) !important;
-            border-color: #00ffc8 !important;
-            box-shadow: 0 0 15px #00ffc8;
+            background-color: var(--accent-color) !important; /* Hijau Mint */
+            color: var(--text-color) !important;
+            border-color: darkgreen !important;
+            box-shadow: 0 0 5px darkgreen;
         }
 
         /* Status Jawaban: Salah */
         .btn-wrong {
-            background-color: #ff007b !important;
-            color: #fff !important;
-            border-color: #ff007b !important;
-            box-shadow: 0 0 15px #ff007b;
+            background-color: var(--main-color) !important; /* Pink */
+            color: white !important;
+            border-color: darkred !important;
+            box-shadow: 0 0 5px darkred;
         }
 
-        /* Efek Glow Teks untuk Skor Akhir */
-        .custom-text-glow {
-            text-shadow: 0 0 5px #ffc107, 0 0 10px #ffc10
+        /* Timer */
+        #timer {
+            background-color: #fff7b5 !important; /* Kuning Telur */
+            color: var(--text-color) !important;
+            border: 1px solid #ffbebc;
+        }
+        
+        /* Tombol Lanjut */
+        #next-btn {
+            background-color: var(--main-color);
+            border-color: var(--main-color);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 900;
+        }
+        
+        /* Disable tombol yang sudah dipilih */
+        .option-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">
+                <span style="font-size: 1.5em; vertical-align: middle;">🐈</span> Kimia **KUCING!**
+            </span>
+            <span id="score-display" class="badge bg-success fs-5" style="background-color: #79d7f0 !important; color: white !important;">Skor: 0</span>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div id="quiz-card" class="card custom-card-cute">
+                    <div class="card-header text-center custom-header">
+                        <h2 id="question-number">Pertanyaan 1/5</h2>
+                        <div id="timer" class="badge fs-6 mt-2">Waktu: 15s</div>
+                    </div>
+                    <div class="card-body">
+                        <h4 id="question-text" class="card-title mb-4 text-center">...</h4>
                         
-           
-                   
+                        <div class="row g-3" id="answer-options">
+                            </div>
+
+                        <div id="feedback" class="mt-4 p-3 rounded text-center d-none"></div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button id="next-btn" class="btn btn-lg d-none">Meow! Lanjut!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-page" class="container mt-5 d-none">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="card custom-card-cute p-5">
+                    <h1 style="color: var(--main-color);" class="mb-3"><span style="font-size: 1.5em;">🎉</span> Kuis Selesai!</h1>
+                    <p class="fs-4">Skor Akhirmu adalah:</p>
+                    <h2 id="final-score" style="color: var(--main-color);" class="display-1">0</h2>
+                    <p id="result-message" class="fs-5 mt-3"></p>
+                    <button class="btn btn-lg mt-4" style="background-color: var(--accent-color); color: var(--text-color); border: none;" onclick="location.reload()">Ulangi Kuis (Main Lagi, Yuk!)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 1. Data Pertanyaan Kuis Kimia
+        const questions = [
+            {
+                question: "Kalau atom bilang 'Meong', unsur apa yang dia maksud?",
+                options: ["Nitrogen (N)", "Neon (Ne)", "Natrium (Na)", "Nickel (Ni)"],
+                answer: "Neon (Ne)",
+                explanation: "Neon (Ne) suka bersinar terang seperti mata kucing di malam hari! 💡"
+            },
+            {
+                question: "Molekul air ($\text{H}_2\text{O}$) itu bentuknya seperti apa?",
+                options: ["Garis lurus (Kaku!)", "Huruf V (Lucu!)", "Segitiga (Piramid?)", "Kotak (Bosan!)"],
+                answer: "Huruf V (Lucu!)",
+                explanation: "Air itu punya bentuk bengkok atau V. Mirip telinga kucing yang sedang menyimak!"
+            },
+            {
+                question: "Asam itu rasanya... (kecuali kamu kucing yang nggak peduli)",
+                options: ["Manis seperti permen", "Pahit seperti kopi", "Asin seperti laut", "Asam/Kecut seperti lemon"],
+                answer: "Asam/Kecut seperti lemon",
+                explanation: "Asam punya pH di bawah 7 dan rasanya kecut! Jangan dicoba ya, nanti cemberut!"
+            },
+            {
+                question: "Ketika es mencair jadi air, ini termasuk perubahan apa?",
+                options: ["Kimia (Berubah total)", "Fisika (Wujudnya saja)", "Biologi (Tumbuh besar)", "Ekonomi (Harga naik)"],
+                answer: "Fisika (Wujudnya saja)",
+                explanation: "Wujudnya berubah (padat ke cair), tapi ia tetap $\\text{H}_2\text{O}$! Ini perubahan Fisika. 🧊➡️💧"
+            },
+            {
+                question: "Gas yang paling malas bereaksi dan sering dipakai untuk mengisi balon pesta adalah...",
+                options: ["Oksigen (O)", "Helium (He)", "Karbon Dioksida ($\text{CO}_2$)", "Klorin (Cl)"],
+                answer: "Helium (He)",
+                explanation: "Helium adalah gas mulia. Dia terlalu santai dan stabil, jadi jarang mau 'bermain' (bereaksi)!"
+            }
+        ];
+
+        // 2. Variabel Kuis
+        let currentQuestionIndex = 0;
+        let score = 0;
+        const totalQuestions = questions.length;
+        let quizActive = true;
+
+        // 3. Elemen DOM
+        const quizCard = document.getElementById('quiz-card');
+        const resultPage = document.getElementById('result-page');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const scoreDisplayEl = document.getElementById('score-display');
+        const feedbackEl = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const finalScoreEl = document.getElementById('final-score');
+        const resultMessageEl = document.getElementById('result-message');
+        const timerEl = document.getElementById('timer');
+        let timerInterval;
+        const TIME_LIMIT = 15; // Batas waktu per pertanyaan
+
+        // 4. Fungsi Utama
+        function startTimer() {
+            let timeLeft = TIME_LIMIT;
+            timerEl.textContent = `Waktu: ${timeLeft}s`;
+            clearInterval(timerInterval); 
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = `Waktu: ${timeLeft}s`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function handleTimeOut() {
+            if (!quizActive) return; 
+
+            // Nonaktifkan semua tombol setelah waktu habis
+            document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+            
+            // Tampilkan feedback bahwa waktu habis
+            feedbackEl.classList.remove('d-none', 'alert-success', 'alert-danger');
+            feedbackEl.classList.add('alert', 'alert-warning');
+            feedbackEl.innerHTML = "Waktu habis! Jawaban otomatis dianggap salah. Jawaban Benar: <strong>" + questions[currentQuestionIndex].answer + "</strong>";
+
+            nextBtn.classList.remove('d-none');
+            quizActive = false; // Kuis tidak aktif sampai tombol next ditekan
+        }
+
+
+        function loadQuestion() {
+            quizActive = true;
+            const q = questions[currentQuestionIndex];
+
+            // Reset tampilan
+            nextBtn.classList.add('d-none');
+            feedbackEl.classList.add('d-none');
+            answerOptionsEl.innerHTML = ''; 
+
+            // Update Pertanyaan dan Nomor
+            questionNumberEl.textContent = `Pertanyaan ${currentQuestionIndex + 1}/${totalQuestions}`;
+            
+            // Menggunakan .innerHTML untuk mendukung simbol LaTeX sederhana
+            questionTextEl.innerHTML = q.question.replace(/\\text{([^}]+)}/g, '$1').replace(/\\(.)/g, '$$1'); 
+
+            // Buat Tombol Pilihan Jawaban
+            q.options.forEach(option => {
+                const col = document.createElement('div');
+                col.className = 'col-6';
+                
+                const button = document.createElement('button');
+                button.className = 'btn btn-outline-light w-100 option-btn';
+                button.textContent = option;
+                button.dataset.answer = option;
+                button.addEventListener('click', () => selectAnswer(option, q.answer, q.explanation));
+                
+                col.appendChild(button);
+                answerOptionsEl.appendChild(col);
+            });
+            
+            startTimer(); // Mulai timer untuk pertanyaan baru
+        }
+
+        function selectAnswer(selectedOption, correctAnswer, explanation) {
+            if (!quizActive) return; // Jangan izinkan klik jika waktu habis atau sudah dijawab
+            
+            clearInterval(timerInterval); // Hentikan timer saat jawaban dipilih
+            quizActive = false;
+            
+            const allButtons = document.querySelectorAll('.option-btn');
+            let isCorrect = (selectedOption === correctAnswer);
+
+            // Nonaktifkan semua tombol setelah memilih
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                
+                // Tandai Jawaban Benar dan Salah
+                if (btn.dataset.answer === correctAnswer) {
+                    btn.classList.add('btn-correct');
+                    btn.classList.remove('btn-outline-light');
+                } else if (btn.dataset.answer === selectedOption) {
+                    btn.classList.add('btn-wrong');
+                    btn.classList.remove('btn-outline-light');
+                }
+            });
+
+            // Tampilkan Feedback
+            feedbackEl.classList.remove('d-none', 'alert-success', 'alert-danger', 'alert-warning');
+            feedbackEl.classList.add('alert');
+            
+            if (isCorrect) {
+                score++;
+                feedbackEl.classList.add('alert-success');
+                feedbackEl.innerHTML = `**BENAR!** <br>Penjelasan: ${explanation}`;
+            } else {
+                feedbackEl.classList.add('alert-danger');
+                feedbackEl.innerHTML = `**SALAH.** Jawaban Benar adalah **${correctAnswer}**. <br>Penjelasan: ${explanation}`;
+            }
+
+            // Update Skor
+            scoreDisplayEl.textContent = `Skor: ${score}`;
+            
+            // Tampilkan Tombol Lanjut
+            nextBtn.classList.remove('d-none');
+        }
+
+        function nextQuestion() {
+            currentQuestion
