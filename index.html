@@ -7,9 +7,98 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
-    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+
+    <style>
+        /* Warna Dasar */
+        :root {
+            --bg-color: #0d1a26; /* Biru gelap */
+            --primary-glow: #00ffc8; /* Hijau neon */
+            --secondary-glow: #ff007b; /* Pink neon */
+        }
+
+        /* Mengatur Latar Belakang */
+        body {
+            background-color: var(--bg-color);
+            color: #f0f8ff; /* Warna teks putih kebiruan */
+            font-family: 'Orbitron', sans-serif; /* Font khas Sci-Fi */
+            padding-bottom: 50px;
+        }
+
+        /* Efek Glow untuk Kartu Utama */
+        .custom-card-glow {
+            background-color: #1a2c3e; /* Warna kartu sedikit lebih terang */
+            border: 2px solid var(--primary-glow);
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.5), 0 0 10px rgba(255, 0, 123, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .custom-card-glow:hover {
+            transform: scale(1.02);
+        }
+
+        /* Header Kuis */
+        .custom-header {
+            background-color: #07121b;
+            color: var(--primary-glow);
+            border-bottom: 2px solid var(--secondary-glow);
+        }
+
+        /* Tombol Jawaban */
+        .option-btn {
+            border-color: var(--primary-glow);
+            color: var(--primary-glow);
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: rgba(0, 255, 200, 0.2);
+            color: #fff;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Status Jawaban: Benar */
+        .btn-correct {
+            background-color: #00ffc8 !important;
+            color: var(--bg-color) !important;
+            border-color: #00ffc8 !important;
+            box-shadow: 0 0 15px #00ffc8;
+        }
+
+        /* Status Jawaban: Salah */
+        .btn-wrong {
+            background-color: #ff007b !important;
+            color: #fff !important;
+            border-color: #ff007b !important;
+            box-shadow: 0 0 15px #ff007b;
+        }
+
+        /* Efek Glow Teks untuk Skor Akhir */
+        .custom-text-glow {
+            text-shadow: 0 0 5px #ffc107, 0 0 10px #ffc107, 0 0 20px #ffc107;
+        }
+
+        /* Tata Letak Navbar */
+        .navbar {
+            border-bottom: 3px solid var(--secondary-glow);
+        }
+
+        /* Tombol Lanjut */
+        #next-btn {
+            background-color: var(--secondary-glow);
+            border-color: var(--secondary-glow);
+            color: #fff;
+            box-shadow: 0 0 10px var(--secondary-glow);
+        }
+
+        /* Disable tombol yang sudah dipilih */
+        .option-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,23 +114,19 @@
             <div class="col-lg-8">
                 <div id="quiz-card" class="card custom-card-glow">
                     <div class="card-header text-center custom-header">
-                        <h2 id="question-number">Pertanyaan 1/10</h2>
+                        <h2 id="question-number">Pertanyaan 1/5</h2>
                         <div id="timer" class="badge bg-warning text-dark fs-6 mt-2">Waktu: 15s</div>
                     </div>
                     <div class="card-body">
-                        <h4 id="question-text" class="card-title mb-4">Apa simbol kimia untuk unsur Kalium?</h4>
+                        <h4 id="question-text" class="card-title mb-4">...</h4>
                         
                         <div class="row g-3" id="answer-options">
-                            <div class="col-6"><button class="btn btn-outline-light w-100 option-btn" data-answer="Na">A. Na</button></div>
-                            <div class="col-6"><button class="btn btn-outline-light w-100 option-btn" data-answer="K">B. K</button></div>
-                            <div class="col-6"><button class="btn btn-outline-light w-100 option-btn" data-answer="Ca">C. Ca</button></div>
-                            <div class="col-6"><button class="btn btn-outline-light w-100 option-btn" data-answer="Mg">D. Mg</button></div>
-                        </div>
+                            </div>
 
                         <div id="feedback" class="mt-4 p-3 rounded text-center d-none"></div>
 
                         <div class="d-grid gap-2 mt-4">
-                            <button id="next-btn" class="btn btn-info btn-lg d-none">Lanjut ke Pertanyaan Berikutnya</button>
+                            <button id="next-btn" class="btn btn-info btn-lg d-none">Lanjut</button>
                         </div>
                     </div>
                 </div>
@@ -63,10 +148,143 @@
         </div>
     </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/xxxxxxxxxx.js" crossorigin="anonymous"></script> 
-    <script src="script.js"></script>
+    
+    <script>
+        // 1. Data Pertanyaan Kuis Kimia
+        const questions = [
+            {
+                question: "Apa simbol kimia untuk unsur Natrium?",
+                options: ["N", "Na", "Ni", "Nb"],
+                answer: "Na",
+                explanation: "Natrium memiliki simbol 'Na' yang berasal dari bahasa Latin 'Natrium'."
+            },
+            {
+                question: "Berapa pH dari air murni pada suhu 25°C?",
+                options: ["0", "7", "10", "14"],
+                answer: "7",
+                explanation: "Air murni bersifat netral, sehingga memiliki pH 7."
+            },
+            {
+                question: "Ikatan kimia yang terbentuk antara atom logam dan non-logam adalah...",
+                options: ["Ikatan Kovalen", "Ikatan Ionik", "Ikatan Logam", "Ikatan Hidrogen"],
+                answer: "Ikatan Ionik",
+                explanation: "Ikatan Ionik melibatkan serah terima elektron, biasanya antara logam dan non-logam."
+            },
+            {
+                question: "Senyawa dengan rumus $\text{CH}_4$ dikenal sebagai...",
+                options: ["Etanol", "Propana", "Metana", "Butana"],
+                answer: "Metana",
+                explanation: "Metana ($\text{CH}_4$) adalah hidrokarbon paling sederhana."
+            },
+            {
+                question: "Siapakah ilmuwan yang menemukan tabel periodik unsur?",
+                options: ["Niels Bohr", "Dmitri Mendeleev", "Marie Curie", "Albert Einstein"],
+                answer: "Dmitri Mendeleev",
+                explanation: "Dmitri Mendeleev diakui sebagai penemu tabel periodik modern."
+            }
+        ];
 
-</body>
-</html>
+        // 2. Variabel Kuis
+        let currentQuestionIndex = 0;
+        let score = 0;
+        const totalQuestions = questions.length;
+        let quizActive = true;
+
+        // 3. Elemen DOM
+        const quizCard = document.getElementById('quiz-card');
+        const resultPage = document.getElementById('result-page');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const scoreDisplayEl = document.getElementById('score-display');
+        const feedbackEl = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const finalScoreEl = document.getElementById('final-score');
+        const resultMessageEl = document.getElementById('result-message');
+        const timerEl = document.getElementById('timer');
+        let timerInterval;
+        const TIME_LIMIT = 15; // Batas waktu per pertanyaan
+
+        // 4. Fungsi Utama
+        function startTimer() {
+            let timeLeft = TIME_LIMIT;
+            timerEl.textContent = `Waktu: ${timeLeft}s`;
+            clearInterval(timerInterval); // Bersihkan interval sebelumnya
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = `Waktu: ${timeLeft}s`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeOut();
+                }
+            }, 1000);
+        }
+
+        function handleTimeOut() {
+            if (!quizActive) return; 
+
+            // Nonaktifkan semua tombol setelah waktu habis
+            document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+            
+            // Tampilkan feedback bahwa waktu habis
+            feedbackEl.classList.remove('d-none', 'alert-success', 'alert-danger');
+            feedbackEl.classList.add('alert', 'alert-warning');
+            feedbackEl.innerHTML = "Waktu habis! Jawaban otomatis dianggap salah. Jawaban Benar: <strong>" + questions[currentQuestionIndex].answer + "</strong>";
+
+            nextBtn.classList.remove('d-none');
+            quizActive = false; // Kuis tidak aktif sampai tombol next ditekan
+        }
+
+
+        function loadQuestion() {
+            quizActive = true;
+            const q = questions[currentQuestionIndex];
+
+            // Reset tampilan
+            nextBtn.classList.add('d-none');
+            feedbackEl.classList.add('d-none');
+            answerOptionsEl.innerHTML = ''; 
+
+            // Update Pertanyaan dan Nomor
+            questionNumberEl.textContent = `Pertanyaan ${currentQuestionIndex + 1}/${totalQuestions}`;
+            questionTextEl.innerHTML = q.question; 
+
+            // Buat Tombol Pilihan Jawaban
+            q.options.forEach(option => {
+                const col = document.createElement('div');
+                col.className = 'col-6';
+                
+                const button = document.createElement('button');
+                button.className = 'btn btn-outline-light w-100 option-btn';
+                button.textContent = option;
+                button.dataset.answer = option;
+                button.addEventListener('click', () => selectAnswer(option, q.answer, q.explanation));
+                
+                col.appendChild(button);
+                answerOptionsEl.appendChild(col);
+            });
+            
+            startTimer(); // Mulai timer untuk pertanyaan baru
+        }
+
+        function selectAnswer(selectedOption, correctAnswer, explanation) {
+            if (!quizActive) return; // Jangan izinkan klik jika waktu habis atau sudah dijawab
+            
+            clearInterval(timerInterval); // Hentikan timer saat jawaban dipilih
+            quizActive = false;
+            
+            const allButtons = document.querySelectorAll('.option-btn');
+            let isCorrect = (selectedOption === correctAnswer);
+
+            // Nonaktifkan semua tombol setelah memilih
+            allButtons.forEach(btn => {
+                btn.disabled = true;
+                
+                // Tandai Jawaban Benar dan Salah
+                if (btn.dataset.answer === correctAnswer) {
+                    btn.classList.add('btn-correct');
+                    btn.classList.remove('btn-outline-light');
+                } else if (btn.dataset.answer === selected
