@@ -1,1 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimia Blitz! | Kuis Unsur & Molekul</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1"><i class="fas fa-atom"></i> Kimia **BLITZ!**</span>
+            <span id="score-display" class="badge bg-success fs-5">Skor: 0</span>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div id="quiz-card" class="card custom-card-glow">
+                    <div class="card-header text-center custom-header">
+                        <h2 id="question-number">Pertanyaan 1/10</h2>
+                        <div id="timer" class="badge bg-warning text-dark fs-6 mt-2">Waktu: 15s</div>
+                    </div>
+                    <div class="card-body">
+                        <h4 id="question-text" class="card-title mb-4">Apa simbol kimia untuk unsur Kalium?</h4>
+                        
+                        <div class="row g-3" id="answer-options">
+                            <div class="col-6"><button class="btn btn-outline-light w-100 option-btn" data-answer="Na">A. Na</button></div>
+                            <div class="col-6"><button class="btn btn-outline-light w-100 option-btn" data-answer="K">B. K</button></div>
+                            <div class="col-6"><button class="btn btn-outline-light w-100 option-btn" data-answer="Ca">C. Ca</button></div>
+                            <div class="col-6"><button class="btn btn-outline-light w-100 option-btn" data-answer="Mg">D. Mg</button></div>
+                        </div>
+
+                        <div id="feedback" class="mt-4 p-3 rounded text-center d-none"></div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button id="next-btn" class="btn btn-info btn-lg d-none">Lanjut ke Pertanyaan Berikutnya</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-page" class="container mt-5 d-none">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="card custom-card-glow p-5">
+                    <h1 class="text-success mb-3">Selamat! Kuis Selesai!</h1>
+                    <p class="fs-4">Skor Akhir Anda:</p>
+                    <h2 id="final-score" class="display-1 text-warning custom-text-glow">0</h2>
+                    <p id="result-message" class="fs-5 mt-3"></p>
+                    <button class="btn btn-danger btn-lg mt-4" onclick="location.reload()">Ulangi Kuis</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/xxxxxxxxxx.js" crossorigin="anonymous"></script> 
+    <script src="script.js"></script>
+
+</body>
+</html>
